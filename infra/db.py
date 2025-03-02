@@ -5,6 +5,7 @@ from typing import AsyncGenerator
 
 
 async def create_connection_pool(dsn: str) -> asyncpg.pool.Pool:
+    """Создаёт пул соединений с базой данных."""
     return await asyncpg.pool.create_pool(dsn)
 
 
@@ -12,11 +13,12 @@ async def create_connection_pool(dsn: str) -> asyncpg.pool.Pool:
 async def session_generator(
     pool: asyncpg.pool.Pool,
 ) -> AsyncGenerator[asyncpg.connection.Connection, None]:
+    """Создаёт соединение с базой данных"""
     async with pool.acquire() as conn:
         yield conn
 
 
-async def create_database_if_not_exists(dsn: str, db_name: str) -> None:
+async def create_database_if_not_exists(db_name: str) -> None:
     """Проверяет существование базы данных и создаёт её, если она не существует."""
     conn = await asyncpg.connection.connect(
         host=config.DB_HOST,

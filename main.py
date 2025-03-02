@@ -1,6 +1,6 @@
 import asyncio
 from cli import parse_args
-from db import create_connection_pool, create_database_if_not_exists
+from infra.db import create_connection_pool, create_database_if_not_exists
 from usecase import EmployeeService
 from colorama import Fore, Style
 import config
@@ -13,19 +13,20 @@ async def main() -> None:
     args = parse_args()
 
     print(Fore.YELLOW + "Подключение к базе данных..." + Style.RESET_ALL)
-    await create_database_if_not_exists(config.DSN, "employees")
+    await create_database_if_not_exists("employees")
     pool = await create_connection_pool(dsn=config.DSN)
 
     employee_service = EmployeeService(pool)
 
-    print(Fore.CYAN + "Импортируем данные и получаем сотрудников..." + Style.RESET_ALL)
     employees = await employee_service.import_data_and_get_employees(
         args.json_file, args.employee_id
     )
 
     if employees:
         print(
-            Fore.BLUE + f"Сотрудники в офисе с ID {args.employee_id}:" + Style.RESET_ALL
+            Fore.BLUE
+            + f"Коллеги сотрудника с ID {args.employee_id} в том же офисе:"
+            + Style.RESET_ALL
         )
         for employee in employees:
             print(Fore.MAGENTA + f"- {employee}" + Style.RESET_ALL)

@@ -1,5 +1,5 @@
 import asyncpg
-from db import create_connection_pool, session_generator
+from infra.db import create_connection_pool, session_generator
 import config
 
 

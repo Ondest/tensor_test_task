@@ -1,8 +1,7 @@
 import pytest
-import asyncpg
 import json
 from usecase import EmployeeService
-from db import create_connection_pool
+from infra.db import create_connection_pool
 import config
 
 

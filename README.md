@@ -25,34 +25,21 @@ cd tensor_test_task
 - Создайте и активируйте виртуальное окружение:
 
 ```bash
-
-python3 -m venv env
-source env/bin/activate  # В Windows используйте `env\Scripts\activate`
+uv venv
+source .venv/bin/activate
 ```
 - Установите зависимости:
 ```bash
-uv install
+uv sync
 ```
-или
-```bash
-poetry install
-```
-или
-```bash
-pip install -r requirements.txt
-```
+Для обратной совместимости с pip есть также requirements.txt
+
 - Разверните PostgreSQL с помощью Docker:
 ```bash
 docker-compose up -d
 ```
-- Создайте файл .env с переменными окружения:
-```plaintext
-DB_USER=your_db_user
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_PORT=5433
-DB_NAME=employees
-```
+- Создайте файл .env с переменными окружения как .env-example:
+
 🚀 Использование
 
 - Для использования системы выполните следующую команду:
